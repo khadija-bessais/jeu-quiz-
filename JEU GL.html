@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Qui veut réussir son Sprint ?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .game-box {
+            background: #ffffff;
+            color: #333;
+            max-width: 700px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .answers button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #2a5298;
+            color: white;
+        }
+
+        .answers button:hover {
+            background: #1e3c72;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background: #28a745;
+            color: white;
+            display: none;
+        }
+
+        .next-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-box">
+    <h1>🎮 Qui veut réussir son Sprint ?</h1>
+    <p>Testez vos connaissances sur Scrum</p>
+
+    <div class="question" id="question"></div>
+
+    <div class="answers">
+        <button onclick="checkAnswer(0)" id="a0"></button>
+        <button onclick="checkAnswer(1)" id="a1"></button>
+        <button onclick="checkAnswer(2)" id="a2"></button>
+        <button onclick="checkAnswer(3)" id="a3"></button>
+    </div>
+
+    <div class="result" id="result"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Question suivante</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            q: "Quelle est une valeur fondamentale de l’agilité ?",
+            a: [
+                "Documentation exhaustive",
+                "Les individus et leurs interactions",
+                "Planification rigide",
+                "Hiérarchie stricte"
+            ],
+            correct: 1
+        },
+        {
+            q: "Qui est responsable du Product Backlog ?",
+            a: [
+                "Scrum Master",
+                "Équipe de développement",
+                "Product Owner",
+                "Client"
+            ],
+            correct: 2
+        },
+        {
+            q: "Qu’est-ce qu’un Sprint ?",
+            a: [
+                "Une réunion",
+                "Un livrable final",
+                "Une itération de développement",
+                "Un document"
+            ],
+            correct: 2
+        },
+        {
+            q: "Quelle est la durée maximale d’un Sprint ?",
+            a: [
+                "1 semaine",
+                "2 semaines",
+                "1 mois",
+                "6 mois"
+            ],
+            correct: 2
+        },
+        {
+            q: "À quoi sert le Burndown Chart ?",
+            a: [
+                "Gérer le budget",
+                "Suivre l’avancement du travail",
+                "Tester le produit",
+                "Former l’équipe"
+            ],
+            correct: 1
+        }
+    ];
+
+    let index = 0;
+
+    function loadQuestion() {
+        document.getElementById("result").innerHTML = "";
+        document.getElementById("nextBtn").style.display = "none";
+
+        const q = questions[index];
+        document.getElementById("question").innerHTML = q.q;
+        document.getElementById("a0").innerHTML = q.a[0];
+        document.getElementById("a1").innerHTML = q.a[1];
+        document.getElementById("a2").innerHTML = q.a[2];
+        document.getElementById("a3").innerHTML = q.a[3];
+    }
+
+    function checkAnswer(choice) {
+    const result = document.getElementById("result");
+    const correctAnswer = questions[index].a[questions[index].correct];
+
+    if (choice === questions[index].correct) {
+        result.style.color = "green";
+        result.innerHTML = "✅ Bonne réponse ! Le Sprint avance.";
+    } else {
+        result.style.color = "red";
+        result.innerHTML = `❌ Mauvaise réponse. Attention au Sprint !<br>La bonne réponse était : <strong>${correctAnswer}</strong>`;
+    }
+
+    document.getElementById("nextBtn").style.display = "inline-block";
+}
+
+
+    function nextQuestion() {
+        index++;
+        if (index < questions.length) {
+            loadQuestion();
+        } else {
+            document.querySelector(".game-box").innerHTML = `
+                <h1>🏆 Sprint terminé !</h1>
+                <p>Bravo 🎉 Vous avez terminé le quiz Scrum.</p>
+                <p>Vous maîtrisez maintenant les bases de l’agilité et de Scrum.</p>
+            `;
+        }
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
